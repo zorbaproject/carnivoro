@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 Fredi Machado <https://github.com/Fredi>
+ * This program has been developed by Luca Tringali, using code from
+ * Fredi Machado <https://github.com/Fredi> for the IRC client.
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -20,6 +21,17 @@
 
 #include "IRCClient.h"
 #include <cstdlib>
+#include <fstream>
+
+
+#ifdef _WIN32
+#include <winsock2.h>
+#else
+#include <sys/socket.h>
+#include <resolv.h>
+#include <arpa/inet.h>
+#endif
+
 
 #define NUM_IRC_CMDS 26
 
@@ -41,5 +53,6 @@ inline int const GetCommandHandler(std::string command)
 
     return NUM_IRC_CMDS;
 }
+
 
 #endif

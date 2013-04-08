@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 Fredi Machado <https://github.com/Fredi>
+ * This program has been developed by Luca Tringali, using code from
+ * Fredi Machado <https://github.com/Fredi> for the IRC client.
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the

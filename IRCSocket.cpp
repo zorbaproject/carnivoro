@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2011 Fredi Machado <https://github.com/Fredi>
+ * This program has been developed by Luca Tringali, using code from
+ * Fredi Machado <https://github.com/Fredi> for the IRC client.
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -23,21 +24,21 @@
 
 bool IRCSocket::Init()
 {
-    #ifdef _WIN32
+#ifdef _WIN32
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData))
     {
         std::cout << "Unable to initialize Winsock." << std::endl;
         return false;
     }
-    #endif
+#endif
 
     if ((_socket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET)
     {
         std::cout << "Socket error." << std::endl;
-        #ifdef _WIN32
+#ifdef _WIN32
         WSACleanup();
-        #endif
+#endif
         return false;
     }
 
@@ -45,19 +46,19 @@ bool IRCSocket::Init()
     if (setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR, (char const*)&on, sizeof(on)) == -1)
     {
         std::cout << "Invalid socket." << std::endl;
-        #ifdef _WIN32
+#ifdef _WIN32
         WSACleanup();
-        #endif
+#endif
         return false;
     }
 
-    #ifdef _WIN32
+#ifdef _WIN32
     u_long mode = 0;
     ioctlsocket(_socket, FIONBIO, &mode);
-    #else
+#else
     fcntl(_socket, F_SETFL, O_NONBLOCK);
     fcntl(_socket, F_SETFL, O_ASYNC);
-    #endif
+#endif
 
     return true;
 }
@@ -69,9 +70,9 @@ bool IRCSocket::Connect(char const* host, int port)
     if (!(he = gethostbyname(host)))
     {
         std::cout << "Could not resolve host: " << host << std::endl;
-        #ifdef _WIN32
+#ifdef _WIN32
         WSACleanup();
-        #endif
+#endif
         return false;
     }
 
@@ -98,9 +99,9 @@ void IRCSocket::Disconnect()
 {
     if (_connected)
     {
-        #ifdef _WIN32
+#ifdef _WIN32
         shutdown(_socket, 2);
-        #endif
+#endif
         //closesocket(_socket);
         _connected = false;
     }
